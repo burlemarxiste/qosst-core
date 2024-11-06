@@ -214,6 +214,10 @@ bind_port = 8181
 # Default : 500e6
 rate = 500e6
 
+# Location of the device
+# Default : ""
+location = ""
+
 # Amplitude, in V
 # The generated data by the DSP will be between +1 and -1
 # If the amplitude is A, then this means that the +1 will be
