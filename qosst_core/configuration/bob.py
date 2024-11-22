@@ -442,6 +442,8 @@ class BobDSPConfiguration(BaseConfiguration):
     equalizer: (
         BobDSPEqualizerConfiguration  #: The equalizer part of Bob's DSP configuration
     )
+    elec_noise_estimation_ratio: float  #: Ratio of the total number of electronic noise samples to use for the variance estimation
+    elec_shot_noise_estimation_ratio: float  #: Ratio of the total number of electronic and shot noise samples to use for the variance estimation
 
     DEFAULT_DEBUG: bool = True  #: Default value fot the debug mode.
     DEFAULT_FIR_SIZE: int = 500
@@ -459,6 +461,8 @@ class BobDSPConfiguration(BaseConfiguration):
         0  #: Default value for the filtering size of the phase for the phase recovery.
     )
     DEFAULT_NUM_SAMPLES_FBEAT_ESTIMATION: int = 100000
+    DEFAULT_ELEC_NOISE_ESTIMATION_RATIO: float = 1.0
+    DEFAULT_ELEC_SHOT_NOISE_ESTIMATION_RATIO: float = 1.0
 
     def from_dict(self, config: dict) -> None:
         """Read configuration from dict.
@@ -495,6 +499,12 @@ class BobDSPConfiguration(BaseConfiguration):
             "num_samples_fbeat_estimation", self.DEFAULT_NUM_SAMPLES_FBEAT_ESTIMATION
         )
         self.equalizer = BobDSPEqualizerConfiguration(config.get("equalizer", {}))
+        self.elec_noise_estimation_ratio = config.get(
+            "elec_noise_estimation_ratio", self.DEFAULT_ELEC_NOISE_ESTIMATION_RATIO
+        )
+        self.elec_shot_noise_estimation_ratio = config.get(
+            "elec_shot_noise_estimation_ratio", self.DEFAULT_ELEC_SHOT_NOISE_ESTIMATION_RATIO
+        )
 
     def __str__(self) -> str:
         res = "Bob DSP Configuration\n"
@@ -508,7 +518,9 @@ class BobDSPConfiguration(BaseConfiguration):
         res += f"Alice DAC rate : {self.alice_dac_rate}\n"
         res += f"Exclusion zone : {self.exclusion_zone_pilots}\n"
         res += f"Pilot phase filtering size : {self.pilot_phase_filtering_size}\n"
-        res += f"Number of samples for fbeat estimation : {self.DEFAULT_NUM_SAMPLES_FBEAT_ESTIMATION}\n"
+        res += f"Number of samples for fbeat estimation : {self.num_samples_fbeat_estimation}\n"
+        res += f"Ratio of number of samples for electronic noise estimation : {self.elec_noise_estimation_ratio}\n"
+        res += f"Ratio of number of samples for electronic and shot noise estimation : {self.elec_shot_noise_estimation_ratio}\n"
         res += "\n"
         res += str(self.equalizer)
         return res
