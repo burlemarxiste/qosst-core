@@ -562,6 +562,12 @@ pilot_phase_filtering_size = 0
 # Default : 100000
 num_samples_fbeat_estimation = 100000
 
+# Proportion of samples to keep for the electronic noise estimation.
+elec_noise_estimation_ratio = 0.1
+
+# Proportion of samples to keep for the electronic+shot noise estimation.
+elec_shot_noise_estimation_ratio = 1.0
+
 [bob.dsp.equalizer]
 
 # If true, use the CMA equalizer.
